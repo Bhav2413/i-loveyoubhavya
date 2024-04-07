@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess My Favorites</title>
+    <style>
+        body {
+            font-family: 'Love Letters', cursive;
+            background-color: #FA9EBC; /* light pink */
+            text-align: center;
+            padding-top: 50px;
+            overflow: hidden;
+        }
+        #question {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            margin-top: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            margin-top: 10px;
+            background-color: #ff69b4; /* pink */
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        #response {
+            font-size: 20px;
+            margin-top: 20px;
+        }
+        #secondQuestion {
+            display: none;
+        }
+        #response2 {
+            font-size: 20px;
+            margin-top: 20px;
+        }
+        .heart {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            animation: fall 3s linear infinite;
+        }
+        @keyframes fall {
+            0% {
+                transform: translateY(-10%);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(110%);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="question">What is my favorite car?</div>
+    <input type="text" id="answer">
+    <button onclick="checkAnswer()">Submit</button>
+
+    <div id="response"></div>
+
+    <div id="secondQuestion">
+        <div id="question2">What is my favorite color?</div>
+        <input type="text" id="answer2">
+        <button onclick="checkAnswer2()">Submit</button>
+        <div id="response2"></div>
+    </div>
+
+    <script>
+        function checkAnswer() {
+            var answer = document.getElementById("answer").value.toLowerCase();
+            var responseElement = document.getElementById("response");
+
+            if (answer === "koenigsegg") {
+                responseElement.textContent = "Correct! What is my favorite color?";
+                setTimeout(function(){ askColorQuestion(); }, 2000);
+            } else {
+                responseElement.textContent = "Wrong answer! Try again.";
+            }
+        }
+
+        function askColorQuestion() {
+            var responseElement = document.getElementById("response");
+            responseElement.textContent = "";
+            var secondQuestion = document.getElementById("secondQuestion");
+            secondQuestion.style.display = "block";
+        }
+
+        function checkAnswer2() {
+            var answer = document.getElementById("answer2").value.toLowerCase();
+            var responseElement = document.getElementById("response2");
+
+            if (answer === "green") {
+                responseElement.textContent = "Correct! Do you want to know what this website really hides?";
+                setTimeout(function(){ askForTreasure(); }, 2000);
+            } else {
+                responseElement.textContent = "Wrong answer! Try again.";
+            }
+        }
+
+        function askForTreasure() {
+            var answer = confirm("Do you want to see the treasure?");
+            var responseElement = document.getElementById("response2");
+
+            if (answer) {
+                responseElement.innerHTML = "<p>The treasure this website seems to hide is the utter delight that I get when your face has a smile ❤️</p><p>I LOVE YOU BHAVYA</p>";
+                document.body.style.backgroundColor = "#FA9EBC";
+            } else {
+                responseElement.innerHTML = "Alright then. Bye! <span style='font-size: 30px;'>:(</span>";
+                setTimeout(function(){ window.close(); }, 2000);
+            }
+        }
+
+        // Create falling hearts
+        setInterval(function(){
+            var heart = document.createElement("div");
+            heart.classList.add("heart");
+            heart.style.left = Math.random() * window.innerWidth + "px";
+            document.body.appendChild(heart);
+
+            setTimeout(function(){
+                heart.remove();
+            }, 3000);
+        }, 500);
+    </script>
+</body>
+</html>
+
+
